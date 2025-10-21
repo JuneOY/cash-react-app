@@ -113,7 +113,7 @@ function PayPage() {
           contact.name.toLowerCase().includes(searchTerm) || contact.username.toLowerCase().includes(searchTerm),
       );
 
-      let generatedResults = [];
+      let generatedResults: any = [];
 
       if (realResults.length === 0) {
         generatedResults = Array.from({ length: 10 }, () => generateFuzzyContact(searchTerm));
