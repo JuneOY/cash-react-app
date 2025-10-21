@@ -33,15 +33,8 @@ function SuccessPageContent() {
         </div>
       </div> */}
 
-      {/* Close Button */}
-      <div className="px-6 py-6">
-        <Button variant="ghost" size="icon" onClick={() => router.push("/")} className="hover:bg-transparent">
-          <X className="w-8 h-8" strokeWidth={2.5} />
-        </Button>
-      </div>
-
       {/* Success Content */}
-      <div className="flex-1 flex flex-col items-center pt-12 px-6">
+      <div className="flex-1 flex flex-col items-center pt-30 px-6">
         <div className="w-32 h-32 rounded-full bg-[#4CAF50] flex items-center justify-center mb-12 shadow-lg animate-bounce-in">
           <Check className="w-16 h-16 text-white" strokeWidth={3.5} />
         </div>
@@ -61,7 +54,6 @@ function SuccessPageContent() {
         >
           Done
         </Button>
-        <div className="h-1 bg-gray-900 mx-auto w-32 rounded-full mt-6"></div>
       </div>
     </div>
   )
