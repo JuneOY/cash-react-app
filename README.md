@@ -36,8 +36,6 @@ cd payment-app-ui
 pnpm install
 
 ## 🚀 运行 Running
-
-\`\`\`bash
 # 开发模式
 pnpm dev
 \`\`\`
@@ -142,5 +140,3 @@ Issues and Pull Requests are welcome!
 ---
 
 **注意 Note**: 这是一个 UI 演示项目，不包含真实的支付功能。
-
-This is a UI demonstration project and does not include real payment functionality.
