@@ -25,7 +25,6 @@ A modern payment application interface built with React, Next.js, Tailwind CSS, 
 
 ## 📦 安装 Installation
 
-\`\`\`bash
 # 克隆项目
 git clone <repository-url>
 
@@ -38,7 +37,6 @@ pnpm install
 ## 🚀 运行 Running
 # 开发模式
 pnpm dev
-\`\`\`
 
 在浏览器中打开 [http://localhost:3000](http://localhost:3000) 查看应用。
 
