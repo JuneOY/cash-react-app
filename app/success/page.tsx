@@ -14,7 +14,7 @@ function SuccessPageContent() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Status Bar */}
-      <div className="flex items-center justify-between px-6 pt-4 pb-2">
+      {/* <div className="flex items-center justify-between px-6 pt-4 pb-2">
         <div className="text-xl font-semibold">14:35</div>
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
@@ -31,7 +31,7 @@ function SuccessPageContent() {
             <div className="absolute -right-0.5 top-1/2 -translate-y-1/2 w-0.5 h-1 bg-gray-900"></div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Close Button */}
       <div className="px-6 py-6">
