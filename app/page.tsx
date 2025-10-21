@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { QrCode, User } from "lucide-react"
 import Link from "next/link"
+import Head from 'next/head'
 import { Button } from "@/components/ui/button"
 
 export default function HomePage() {
@@ -42,6 +43,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-linear-to-b from-[#5AC05A] to-[#4CAF50] flex flex-col">
+      <Head>
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/apple-touch-icon.png" />
+      </Head>
       {/* Status Bar */}
       {/* <div className="flex items-center justify-between px-6 pt-4 pb-2">
         <div className="text-base font-semibold text-white">14:34</div>

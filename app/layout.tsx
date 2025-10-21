@@ -18,6 +18,14 @@ export const metadata: Metadata = {
   title: "cash app",
   description: "cash app",
   generator: "cash app",
+  icons: {
+    other:
+    {
+      rel: 'apple-touch-icon-precomposed',
+      url: '/apple-touch-icon.png',
+    },
+
+  },
 }
 
 export default function RootLayout({

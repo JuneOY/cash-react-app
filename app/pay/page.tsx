@@ -43,6 +43,35 @@ const allContacts = [
   { name: "Zoe Scott", username: "$zoes", avatar: "https://i.pravatar.cc/150?img=33" },
 ]
 
+const generateFuzzyContact = (searchTerm: string) => {
+  const lastNames = ["Smith", "Jones", "Williams", "Brown", "Davis", "Miller", "Wilson", "Taylor", "Clark", "Scott", "Hall",
+    "Johnson", "Moore", "Martin", "Anderson", "Thompson", "Garcia", "Martinez", "Robinson", "Rodriguez",
+    "Lewis", "Lee", "Walker", "Allen", "Young", "Hernandez", "King", "Wright", "Lopez", "Hill", "Green",
+    "Adams", "Baker", "Gonzalez", "Nelson", "Carter", "Mitchell", "Perez", "Roberts", "Turner", "Phillips",
+    "Campbell", "Parker", "Evans", "Edwards", "Collins", "Stewart", "Sanchez", "Morris", "Rogers", "Reed",
+    "Cook", "Morgan", "Bell", "Murphy", "Bailey", "Cooper", "Richardson", "Cox", "Howard", "Ward", "Torres"];
+
+  // 核心逻辑：打乱搜索词的字母
+  const chars = searchTerm.toLowerCase().split('');
+  for (let i = chars.length - 1; i > 0; i--) {
+    // Fisher-Yates shuffle algorithm
+    const j = Math.floor(Math.random() * (i + 1));
+    [chars[i], chars[j]] = [chars[j], chars[i]]; // ES6 a,b = b,a 交换语法
+  }
+  let shuffled = chars.join('');
+
+  // 格式化为名字
+  const firstName = shuffled.charAt(0).toUpperCase() + shuffled.slice(1);
+  const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+  const fullName = `${firstName} ${lastName}`;
+
+  // 使用打乱后的名字生成 Cashtag 和唯一的头像
+  const username = `$${firstName.toLowerCase()}${lastName.toLowerCase().slice(0, 3)}${Math.floor(Math.random() * 99)}`;
+  const avatar = `https://i.pravatar.cc/150?u=${username}`; // 使用 u= 参数保证头像唯一性
+
+  return { name: fullName, username, avatar };
+};
+
 function PayPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -69,19 +98,37 @@ function PayPageContent() {
       return
     }
 
+    if (searchTerm.length < 2) {
+      setFilteredContacts([])
+      setIsSearching(false)
+      return
+    }
+
     setIsSearching(true)
 
     const timeoutId = setTimeout(() => {
-      const results = allContacts.filter(
+      // 1. 在真实数据中搜索
+      let realResults = allContacts.filter(
         (contact) =>
           contact.name.toLowerCase().includes(searchTerm) || contact.username.toLowerCase().includes(searchTerm),
       )
-      setFilteredContacts(results)
+
+      let generatedResults: (typeof allContacts) = [];
+
+      // 2. 如果真实结果为空，则动态生成一些模糊数据
+      if (realResults.length === 0) {
+        // 生成 5 个乱序的联系人
+        generatedResults = Array.from({ length: 10 }, () => generateFuzzyContact(searchTerm));
+      }
+
+      // 3. 合并结果并更新状态
+      setFilteredContacts([...realResults, ...generatedResults])
       setIsSearching(false)
-    }, 300) // Simulate network delay
+    }, 300)
 
     return () => clearTimeout(timeoutId)
   }, [recipient])
+
 
   const handlePay = () => {
     if (recipient && note) {
@@ -129,8 +176,8 @@ function PayPageContent() {
           disabled={!isPayButtonEnabled}
           size="lg"
           className={`px-8 py-2.5 rounded-full text-base font-medium transition-all ${isPayButtonEnabled
-              ? "bg-black hover:bg-black/90 text-white"
-              : "bg-gray-300 text-gray-400 cursor-not-allowed hover:bg-gray-300"
+            ? "bg-black hover:bg-black/90 text-white"
+            : "bg-gray-300 text-gray-400 cursor-not-allowed hover:bg-gray-300"
             }`}
         >
           Pay
