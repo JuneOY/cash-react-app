@@ -1,20 +1,10 @@
-// src/App.tsx
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import PayPage from "@/pages/pay/page"
-import SuccessPage from './pages/success/page';
-import Home from "@/pages/page";
+import HomePage from "./pages/page";
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <main>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/pay" element={<PayPage />} />
-            <Route path="/success" element={<SuccessPage />} />
-          </Routes>
-        </Router>
+        <HomePage />
       </main>
     </div>
   );
