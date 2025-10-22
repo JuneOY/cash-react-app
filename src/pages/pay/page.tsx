@@ -54,7 +54,7 @@ const generateFuzzyContact = (searchTerm: string) => {
     const j = Math.floor(Math.random() * (i + 1));
     [chars[i], chars[j]] = [chars[j], chars[i]];
   }
-  let shuffled = chars.join('');
+  const shuffled = chars.join('');
 
   const firstName = shuffled.charAt(0).toUpperCase() + shuffled.slice(1);
   const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
@@ -108,12 +108,12 @@ function PayPage() {
     setIsSearching(true);
 
     const timeoutId = setTimeout(() => {
-      let realResults = allContacts.filter(
+      const realResults = allContacts.filter(
         (contact) =>
           contact.name.toLowerCase().includes(searchTerm) || contact.username.toLowerCase().includes(searchTerm),
       );
 
-      let generatedResults: any = [];
+      let generatedResults: any[] = [];
 
       if (realResults.length === 0) {
         generatedResults = Array.from({ length: 10 }, () => generateFuzzyContact(searchTerm));
