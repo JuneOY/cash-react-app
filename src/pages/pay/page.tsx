@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import { X, ChevronDown, Sparkles, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -66,10 +65,15 @@ const generateFuzzyContact = (searchTerm: string) => {
   return { name: fullName, username, avatar };
 };
 
-function PayPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [amount, setAmount] = useState("500");
+interface PayPageProps {
+  initialAmount?: string;
+  onPaySuccess: (amount: string, recipient: string) => void;
+  onClose: () => void;
+}
+
+
+function PayPage({ initialAmount = "500", onPaySuccess, onClose }: PayPageProps) {
+  const [amount, setAmount] = useState(initialAmount);
   const [recipient, setRecipient] = useState("");
   const [note, setNote] = useState("");
   const [selectedContact, setSelectedContact] = useState<string | null>(null);
@@ -78,12 +82,10 @@ function PayPage() {
   const [isSelectionInProgress, setIsSelectionInProgress] = useState(false);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const amountParam = searchParams.get("amount");
-    if (amountParam && amountParam !== "0") {
-      setAmount(amountParam);
+    if (initialAmount && initialAmount !== "0") {
+      setAmount(initialAmount);
     }
-  }, [location]);
+  }, [initialAmount]);
 
   useEffect(() => {
     if (isSelectionInProgress) {
@@ -128,7 +130,7 @@ function PayPage() {
 
   const handlePay = () => {
     if (recipient && note) {
-      navigate(`/success?amount=${amount}&recipient=${encodeURIComponent(recipient)}`);
+      onPaySuccess(amount, recipient);
     }
   };
 
@@ -144,7 +146,7 @@ function PayPage() {
     <div className="h-screen bg-white flex flex-col overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="hover:bg-transparent">
+        <Button variant="ghost" size="icon" onClick={onClose} className="hover:bg-transparent">
           <X className="size-8" />
         </Button>
         <div className="text-3xl font-semibold">${amount}</div>
