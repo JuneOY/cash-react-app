@@ -118,7 +118,7 @@ function PayPage({ initialAmount = "500", onPaySuccess, onClose }: PayPageProps)
       let generatedResults: any[] = [];
 
       if (realResults.length === 0) {
-        generatedResults = Array.from({ length: 10 }, () => generateFuzzyContact(searchTerm));
+        generatedResults = Array.from({ length: 20 }, () => generateFuzzyContact(searchTerm));
       }
 
       setFilteredContacts([...realResults, ...generatedResults]);
